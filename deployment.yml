@@ -20,7 +20,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - image: hakktastic/lease-calculation-service:0.0.1-SNAPSHOT
+      - image: hakktastic/lease-calculation-service:0.0.1
         imagePullPolicy: Always
         name: lease-calculation-service
         ports:
