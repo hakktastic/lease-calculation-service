@@ -9,18 +9,19 @@ import java.util.Optional;
 
 /**
  * Proxy for retrieving Customer Entities from Customer-Service through Feign.
+ *
  */
 
 @FeignClient(name = "customer-service", url = "http://customer-service:8081")
 public interface CustomerServiceProxy {
 
-    /**
-     * Get Customer Entity by ID.
-     *
-     * @param id ID of Customer Entity
-     * @return Returns a {@link CustomerBean} object
-     */
-    @GetMapping("/customer-service/customers/{id}")
-    Optional<CustomerBean> getCustomerById(@PathVariable int id);
+  /**
+   * Get Customer Entity by ID.
+   *
+   * @param id ID of Customer Entity
+   * @return Returns a {@link CustomerBean} object
+   */
+  @GetMapping("/customer-service/customers/{id}")
+  Optional<CustomerBean> getCustomerById(@PathVariable int id);
 
 }

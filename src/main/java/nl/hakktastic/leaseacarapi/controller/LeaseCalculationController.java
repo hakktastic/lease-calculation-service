@@ -21,68 +21,72 @@ import java.util.Optional;
 
 /**
  * Rest controller for Lease Calculation Service.
+ *
  */
 @RestController
 public class LeaseCalculationController {
 
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    private CarServiceProxy carServiceProxy;
-    @Autowired
-    private InterestRateServiceProxy interestRateProxy;
-    @Autowired
-    private CustomerServiceProxy customerServiceProxy;
+  @Autowired
+  private CarServiceProxy carServiceProxy;
 
-    /**
-     * Calculate lease rate.
-     *
-     * @param carId          ID of car object <em>(retrieved from car-service)</em>
-     * @param mileage        annual mileage in kilometers
-     * @param duration       lease contract duration in months
-     * @param interestRateId ID of Interest Rate object <em>(retrieved from
-     *                       interest-calculation-service)</em>
-     * @param customerId     ID of the customer
-     * @return Returns a {@link ResponseEntity} containing a {@link LeaseRateCalculation} object
-     */
-    @GetMapping(
-            path = "/leaserates/car/{carId}/mileage/{mileage}/duration/{duration}/"
-                    + "interestrate/{interestRateId}/customer/{customerId}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> calculateLeaseRate(@PathVariable int carId, @PathVariable int mileage,
-                                                @PathVariable int duration, @PathVariable int interestRateId, @PathVariable int customerId) {
+  @Autowired
+  private InterestRateServiceProxy interestRateProxy;
 
-        final ResponseEntity<LeaseRateCalculation> responseEntity;
+  @Autowired
+  private CustomerServiceProxy customerServiceProxy;
 
-        // get car object from car-service
-        final Optional<CarBean> optionalCarBean = carServiceProxy.getCarById(carId);
+  private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
-        // get interest rate object from interest-rate-calculation-service
-        final Optional<InterestRateBean> optionalInterestRateBean = interestRateProxy.getInterestById(interestRateId);
+  /**
+   * Calculate lease rate.
+   *
+   * @param carId ID of car object <em>(retrieved from car-service)</em>
+   * @param mileage annual mileage in kilometers
+   * @param duration lease contract duration in months
+   * @param interestRateId ID of Interest Rate object <em>(retrieved from
+   *        interest-calculation-service)</em>
+   * @param customerId ID of the customer
+   * @return Returns a {@link ResponseEntity} containing a {@link LeaseRateCalculation} object
+   */
+  @GetMapping(
+      path = "/leaserates/car/{carId}/mileage/{mileage}/duration/{duration}/"
+          + "interestrate/{interestRateId}/customer/{customerId}",
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> calculateLeaseRate(@PathVariable int carId, @PathVariable int mileage,
+      @PathVariable int duration, @PathVariable int interestRateId, @PathVariable int customerId) {
 
-        final Optional<CustomerBean> optionalCustomerBean = customerServiceProxy.getCustomerById(customerId);
+    final ResponseEntity<LeaseRateCalculation> responseEntity;
 
-        // check if containers are present
-        if (optionalCarBean.isPresent() && optionalInterestRateBean.isPresent()
-                && optionalCustomerBean.isPresent()) {
+    // get car object from car-service
+    final Optional<CarBean> optionalCarBean = carServiceProxy.getCarById(carId);
 
-            // create lease calculation object
-            LeaseRateCalculation leaseRateCalculation = new LeaseRateCalculation(optionalCarBean.get(),
-                    optionalInterestRateBean.get(), optionalCustomerBean.get(), mileage, duration);
+    // get interest rate object from interest-rate-calculation-service
+    final Optional<InterestRateBean> optionalInterestRateBean = interestRateProxy.getInterestById(interestRateId);
 
-            // calculate lease rate
-            leaseRateCalculation.calculate();
+    final Optional<CustomerBean> optionalCustomerBean = customerServiceProxy.getCustomerById(customerId);
 
-            responseEntity = new ResponseEntity<>(leaseRateCalculation, HttpStatus.OK);
+    // check if containers are present
+    if (optionalCarBean.isPresent() && optionalInterestRateBean.isPresent()
+        && optionalCustomerBean.isPresent()) {
 
-            logger.info("Calculate Lease Rate: \n --> Response Code -> {} \n --> Response -> \n {} ",
-                    responseEntity.getStatusCodeValue(), responseEntity.getBody());
+      // create lease calculation object
+      LeaseRateCalculation leaseRateCalculation = new LeaseRateCalculation(optionalCarBean.get(),
+          optionalInterestRateBean.get(), optionalCustomerBean.get(), mileage, duration);
 
-        } else {
+      // calculate lease rate
+      leaseRateCalculation.calculate();
 
-            responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+      responseEntity = new ResponseEntity<>(leaseRateCalculation, HttpStatus.OK);
 
-        return responseEntity;
+      logger.info("Calculate Lease Rate: \n --> Response Code -> {} \n --> Response -> \n {} ",
+          responseEntity.getStatusCodeValue(), responseEntity.getBody());
+
+    } else {
+
+      responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    return responseEntity;
+  }
 
 }
