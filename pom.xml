@@ -11,7 +11,7 @@
 
     <groupId>nl.hakktastic.leaseacarapi</groupId>
     <artifactId>lease-calculation-service</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <name>lease-calculation-service</name>
     <description>Lease Calculation Service for Lease a Car API</description>
 
