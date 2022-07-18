@@ -3,7 +3,6 @@ package nl.hakktastic.leaseacarapi.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.hakktastic.leaseacarapi.service.LeaseCalculationService;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class LeaseCalculationController {
 
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
-
     @Autowired
     LeaseCalculationService leaseCalculationService;
 
@@ -33,11 +30,11 @@ public class LeaseCalculationController {
 
         var leaseRate = leaseCalculationService.calculateLeaseRate(carId,mileage,duration,interestRateId,customerId);
 
-        logger.info("calculate lease rate --> starting calculation of lease rate");
+        log.info("calculate lease rate --> starting calculation of lease rate");
 
         var status = (!Double.isNaN(leaseRate)) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
 
-        logger.info("calculate lease rate --> response code -> {} ({})", status.value(), status.name());
+        log.info("calculate lease rate --> response code -> {} ({})", status.value(), status.name());
 
         return new ResponseEntity<Double>(leaseRate, status);
 
