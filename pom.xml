@@ -11,12 +11,12 @@
 
     <groupId>nl.hakktastic.leaseacarapi</groupId>
     <artifactId>lease-calculation-service</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <name>lease-calculation-service</name>
     <description>Lease Calculation Service for Lease a Car API</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <spring.cloud-version>2021.0.2</spring.cloud-version>
     </properties>
 
