@@ -7,12 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
-
-/**
- * Proxy for retrieving Car Entities from Car-Service through Feign.
- *
- */
-
+/** Proxy for retrieving Car Entities from Car-Service through Feign. */
 @FeignClient(name = "car-service", url = "http://car-service:8082")
 public interface CarServiceProxy {
 

@@ -5,10 +5,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import java.time.LocalDate;
 
-/**
- * Interest Rate Bean.
- *
- */
+/** Interest Rate Bean. */
 @Data
 public class InterestRateBean {
 
@@ -16,9 +13,7 @@ public class InterestRateBean {
   private double interestRate;
   private LocalDate startDate;
 
-  /**
-   * Default constructor.
-   */
+  /** Default constructor. */
   public InterestRateBean() {}
 
   /**
@@ -44,8 +39,11 @@ public class InterestRateBean {
 
       final InterestRateBean otherEntity = (InterestRateBean) obj;
 
-      equation = new EqualsBuilder().appendSuper(super.equals(obj))
-          .append(this.getId(), otherEntity.getId()).isEquals();
+      equation =
+          new EqualsBuilder()
+              .appendSuper(super.equals(obj))
+              .append(this.getId(), otherEntity.getId())
+              .isEquals();
     }
 
     return equation;

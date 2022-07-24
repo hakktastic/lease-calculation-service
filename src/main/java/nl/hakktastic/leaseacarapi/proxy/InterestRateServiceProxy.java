@@ -9,9 +9,7 @@ import java.util.Optional;
 
 /**
  * Proxy for retrieving Interest Rate Entities from Interest-Rate-Calculation-Service through Feign.
- *
  */
-
 @FeignClient(name = "interest-service", url = "http://interest-rate-service:8083")
 public interface InterestRateServiceProxy {
 
@@ -23,5 +21,4 @@ public interface InterestRateServiceProxy {
    */
   @GetMapping("/interest-rate-service/interestrates/{id}")
   Optional<InterestRateBean> getInterestById(@PathVariable int id);
-
 }
