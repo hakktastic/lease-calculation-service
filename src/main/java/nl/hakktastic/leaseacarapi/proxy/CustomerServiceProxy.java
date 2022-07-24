@@ -7,11 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
-/**
- * Proxy for retrieving Customer Entities from Customer-Service through Feign.
- *
- */
-
+/** Proxy for retrieving Customer Entities from Customer-Service through Feign. */
 @FeignClient(name = "customer-service", url = "http://customer-service:8081")
 public interface CustomerServiceProxy {
 
@@ -23,5 +19,4 @@ public interface CustomerServiceProxy {
    */
   @GetMapping("/customer-service/customers/{id}")
   Optional<CustomerBean> getCustomerById(@PathVariable int id);
-
 }

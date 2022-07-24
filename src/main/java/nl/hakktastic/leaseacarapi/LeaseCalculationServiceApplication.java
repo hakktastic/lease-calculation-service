@@ -8,8 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients("nl.hakktastic.leaseacarapi")
 public class LeaseCalculationServiceApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(LeaseCalculationServiceApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(LeaseCalculationServiceApplication.class, args);
+  }
 }

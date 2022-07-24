@@ -2,9 +2,9 @@ def TAG_SELECTOR = "latest"
 def ARTIFACT_ID = "latest"
 
 pipeline {
-  agent {
-    kubernetes {
-      yaml """
+    agent {
+        kubernetes {
+            yaml """
         kind: Pod
         spec:
           containers:
@@ -33,39 +33,39 @@ pipeline {
                     - key: .dockerconfigjson
                       path: config.json
         """
-    }
-  }
-  stages {
-    stage('Build and test with Maven') {
-
-      steps {
-        container(name: 'maven') {
-
-          sh 'mvn clean package'
-
-          script {
-            TAG_SELECTOR = readMavenPom().getVersion()
-            ARTIFACT_ID = readMavenPom().getArtifactId()
-          }
         }
-      }
     }
-    stage('Build container image with Kaniko') {
+    stages {
+        stage('Build and test with Maven') {
+
+            steps {
+                container(name: 'maven') {
+
+                    sh 'mvn clean package'
+
+                    script {
+                        TAG_SELECTOR = readMavenPom().getVersion()
+                        ARTIFACT_ID = readMavenPom().getArtifactId()
+                    }
+                }
+            }
+        }
+        stage('Build container image with Kaniko') {
 
 
-      environment {
-        IMG_ID = "${ARTIFACT_ID}"
-        IMG_TAG = "${TAG_SELECTOR}"
-      }
-      steps {
+            environment {
+                IMG_ID = "${ARTIFACT_ID}"
+                IMG_TAG = "${TAG_SELECTOR}"
+            }
+            steps {
 
-        container(name: 'kaniko', shell: '/busybox/sh') {
+                container(name: 'kaniko', shell: '/busybox/sh') {
 
-          sh '''#!/busybox/sh
+                    sh '''#!/busybox/sh
                         /kaniko/executor --context `pwd` --destination hakktastic/${IMG_ID}:${IMG_TAG} --customPlatform=linux/arm64
                     '''
+                }
+            }
         }
-      }
     }
-  }
 }

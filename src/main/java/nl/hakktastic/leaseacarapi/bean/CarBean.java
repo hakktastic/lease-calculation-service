@@ -3,10 +3,7 @@ package nl.hakktastic.leaseacarapi.bean;
 import lombok.Data;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-/**
- * Car Bean.
- *
- */
+/** Car Bean. */
 @Data
 public class CarBean {
 
@@ -19,9 +16,7 @@ public class CarBean {
   private double nettPrice;
   private int hp;
 
-  /**
-   * Default Constructor.
-   */
+  /** Default Constructor. */
   public CarBean() {}
 
   /**
@@ -36,8 +31,15 @@ public class CarBean {
    * @param nettPrice nett price of the car object
    * @param hp horse power of the car object
    */
-  public CarBean(int id, String make, String model, String version, int numberOfDoors,
-      double grossPrice, double nettPrice, int hp) {
+  public CarBean(
+      int id,
+      String make,
+      String model,
+      String version,
+      int numberOfDoors,
+      double grossPrice,
+      double nettPrice,
+      int hp) {
     super();
     this.id = id;
     this.make = make;
@@ -58,8 +60,11 @@ public class CarBean {
 
       final CarBean otherEntity = (CarBean) obj;
 
-      equation = new EqualsBuilder().appendSuper(super.equals(obj))
-          .append(this.getId(), otherEntity.getId()).isEquals();
+      equation =
+          new EqualsBuilder()
+              .appendSuper(super.equals(obj))
+              .append(this.getId(), otherEntity.getId())
+              .isEquals();
     }
 
     return equation;
