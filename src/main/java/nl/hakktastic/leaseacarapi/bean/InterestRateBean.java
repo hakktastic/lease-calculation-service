@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /** Interest Rate Bean. */
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InterestRateBean {
+public class InterestRateBean implements Serializable {
 
   private int id;
   private double interestRate;
