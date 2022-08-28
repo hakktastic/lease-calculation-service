@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /** Rest controller for Lease Calculation Service. */
 @RestController
 @Slf4j
@@ -23,14 +25,14 @@ public class LeaseCalculationController {
               + "interestrate/{interestRateId}/customer/{customerId}",
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Double> calculateLeaseRate(
-      @PathVariable int carId,
-      @PathVariable int mileage,
-      @PathVariable int duration,
-      @PathVariable int interestRateId,
-      @PathVariable int customerId) {
+      @PathVariable @Valid int carId,
+      @PathVariable @Valid int mileage,
+      @PathVariable @Valid int duration,
+      @PathVariable @Valid int interestRateId,
+      @PathVariable @Valid int customerId) {
 
     var leaseRate =
-            this.leaseCalculationService.calculateLeaseRate(
+        this.leaseCalculationService.calculateLeaseRate(
             carId, mileage, duration, interestRateId, customerId);
 
     log.info("calculate lease rate --> starting calculation of lease rate");
