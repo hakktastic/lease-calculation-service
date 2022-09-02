@@ -30,6 +30,8 @@ public class LeaseCalculationService {
             .car(this.carServiceProxy.getCarById(carId).orElse(null))
             .customer(this.customerServiceProxy.getCustomerById(customerId).orElse(null))
             .interestRate(this.interestRateProxy.getInterestById(interestRateId).orElse(null))
+            .duration(duration)
+            .mileage(mileage)
             .build();
 
     log.info("Lease Rate --> {}", leaseRateBean.toString());
