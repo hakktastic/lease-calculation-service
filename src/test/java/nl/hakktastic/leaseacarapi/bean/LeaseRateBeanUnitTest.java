@@ -159,4 +159,6 @@ public class LeaseRateBeanUnitTest {
     assertThat(optional).isNotNull();
     assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
   }
+
+  // TODO add test cases for mileage and duration
 }

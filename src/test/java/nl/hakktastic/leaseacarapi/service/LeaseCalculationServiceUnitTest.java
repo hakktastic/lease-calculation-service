@@ -70,4 +70,6 @@ public class LeaseCalculationServiceUnitTest {
 
   @Test
   public void givenCustomerAndInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {}
+
+  // TODO add test cases for mileage and duration
 }
