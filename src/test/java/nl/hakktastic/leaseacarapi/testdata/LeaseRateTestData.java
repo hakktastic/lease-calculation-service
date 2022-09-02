@@ -10,7 +10,9 @@ import java.time.format.DateTimeFormatter;
 /** Test Data for Lease Rate Service. */
 public final class LeaseRateTestData {
 
-  public static final Double LEASE_RATE_VALID = 572.34;
+  public static final Double LEASE_RATE_VALID = 574.38;
+  public static final int mileage = 35000;
+  public static final int duration = 48;
 
   public static final class Car {
 

@@ -16,6 +16,8 @@ public class LeaseRateBeanUnitTest {
             .car(LeaseRateTestData.Car.CAR_OBJECT_VALID)
             .customer(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID)
             .interestRate(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(LeaseRateTestData.duration)
             .build();
 
     var optional = leaseRateBean.getLeaseRate();
@@ -28,7 +30,14 @@ public class LeaseRateBeanUnitTest {
   @Test
   public void givenNoArgs_whenGetLeaseRate_thenReturnEmptyOptional() {
 
-    var leaseRateBean = LeaseRateBean.builder().car(null).customer(null).interestRate(null).build();
+    var leaseRateBean =
+        LeaseRateBean.builder()
+            .car(null)
+            .customer(null)
+            .interestRate(null)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(LeaseRateTestData.duration)
+            .build();
 
     var optional = leaseRateBean.getLeaseRate();
 
@@ -45,6 +54,8 @@ public class LeaseRateBeanUnitTest {
             .car(LeaseRateTestData.Car.CAR_OBJECT_VALID)
             .customer(null)
             .interestRate(null)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(LeaseRateTestData.duration)
             .build();
 
     var optional = leaseRateBean.getLeaseRate();
@@ -62,6 +73,8 @@ public class LeaseRateBeanUnitTest {
             .car(null)
             .customer(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID)
             .interestRate(null)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(LeaseRateTestData.duration)
             .build();
 
     var optional = leaseRateBean.getLeaseRate();
@@ -79,6 +92,8 @@ public class LeaseRateBeanUnitTest {
             .car(null)
             .customer(null)
             .interestRate(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(LeaseRateTestData.duration)
             .build();
 
     var optional = leaseRateBean.getLeaseRate();
@@ -96,6 +111,8 @@ public class LeaseRateBeanUnitTest {
             .car(LeaseRateTestData.Car.CAR_OBJECT_VALID)
             .customer(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID)
             .interestRate(null)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(LeaseRateTestData.duration)
             .build();
 
     var optional = leaseRateBean.getLeaseRate();
@@ -113,6 +130,8 @@ public class LeaseRateBeanUnitTest {
             .car(LeaseRateTestData.Car.CAR_OBJECT_VALID)
             .customer(null)
             .interestRate(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(LeaseRateTestData.duration)
             .build();
 
     var optional = leaseRateBean.getLeaseRate();
@@ -130,6 +149,8 @@ public class LeaseRateBeanUnitTest {
             .car(null)
             .customer(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID)
             .interestRate(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(LeaseRateTestData.duration)
             .build();
 
     var optional = leaseRateBean.getLeaseRate();
