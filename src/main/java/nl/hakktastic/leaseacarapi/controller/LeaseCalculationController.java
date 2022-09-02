@@ -35,12 +35,10 @@ public class LeaseCalculationController {
         this.leaseCalculationService.calculateLeaseRate(
             carId, mileage, duration, interestRateId, customerId);
 
-    log.info("calculate lease rate --> starting calculation of lease rate");
-
-    var status = (!Double.isNaN(leaseRate)) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    var status = (leaseRate.isPresent()) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
 
     log.info("calculate lease rate --> response code -> {} ({})", status.value(), status.name());
 
-    return new ResponseEntity<Double>(leaseRate, status);
+    return new ResponseEntity<Double>(leaseRate.getAsDouble(), status);
   }
 }
