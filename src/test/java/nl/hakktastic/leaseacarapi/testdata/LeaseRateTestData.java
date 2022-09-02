@@ -12,7 +12,7 @@ public final class LeaseRateTestData {
 
   public static final Double LEASE_RATE_VALID = 572.34;
 
-  public final class Car {
+  public static final class Car {
 
     public static final int ID_VALID_LAND_ROVER = 4677;
     public static final String MAKE_VALID_LAND_ROVER = "Land Rover";
@@ -24,8 +24,7 @@ public final class LeaseRateTestData {
     public static int HP_VALID_LAND_ROVER = 300;
 
     public static final CarBean CAR_OBJECT_VALID =
-        new CarBean()
-            .builder()
+        CarBean.builder()
             .id(ID_VALID_LAND_ROVER)
             .make(MAKE_VALID_LAND_ROVER)
             .model(MODEL_VALID_DISCOVERY)
@@ -37,7 +36,7 @@ public final class LeaseRateTestData {
             .build();
   }
 
-  public final class Customer {
+  public static final class Customer {
 
     public static final int ID_VALID = 1001;
     public static final String NAME_VALID = "Harry Snel";
@@ -49,8 +48,7 @@ public final class LeaseRateTestData {
     public static Integer PHONE_NUMBER_VALID = 1026142315;
 
     public static final CustomerBean CUSTOMER_OBJECT_VALID =
-        new CustomerBean()
-            .builder()
+        CustomerBean.builder()
             .id(ID_VALID)
             .name(NAME_VALID)
             .street(STREET_NAME_VALID)
@@ -62,7 +60,7 @@ public final class LeaseRateTestData {
             .build();
   }
 
-  public final class InterestRate {
+  public static final class InterestRate {
 
     public static final LocalDate START_DATE_VALID_EXISTING_2014_05_01 =
         LocalDate.parse("2014-05-01", DateTimeFormatter.ISO_DATE);
