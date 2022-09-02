@@ -23,8 +23,6 @@ public final class LeaseRateTestData {
     public static double NETT_PRICE_VALID_LAND_ROVER = 68680.99;
     public static int HP_VALID_LAND_ROVER = 300;
 
-    public static final CarBean CAR_OBJECT_INVALID = new CarBean().builder().build();
-
     public static final CarBean CAR_OBJECT_VALID =
         new CarBean()
             .builder()
@@ -50,8 +48,6 @@ public final class LeaseRateTestData {
     public static final String EMAIL_VALID = "valid@gmail.com";
     public static Integer PHONE_NUMBER_VALID = 1026142315;
 
-    public static final CustomerBean CUSTOMER_OBJECT_INVALID = new CustomerBean().builder().build();
-
     public static final CustomerBean CUSTOMER_OBJECT_VALID =
         new CustomerBean()
             .builder()
@@ -72,9 +68,6 @@ public final class LeaseRateTestData {
         LocalDate.parse("2014-05-01", DateTimeFormatter.ISO_DATE);
     public static final Double INTEREST_RATE_VALID_10 = 10.0;
     public static final Integer INTEREST_RATE_OBJECT_ID_1001 = 1001;
-
-    public static final InterestRateBean INTEREST_RATE_OBJECT_INVALID =
-        InterestRateBean.builder().build();
 
     public static final InterestRateBean INTEREST_RATE_OBJECT_VALID =
         InterestRateBean.builder()
