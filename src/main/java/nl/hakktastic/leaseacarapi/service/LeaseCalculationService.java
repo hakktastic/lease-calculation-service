@@ -8,7 +8,8 @@ import nl.hakktastic.leaseacarapi.proxy.InterestRateServiceProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.OptionalDouble;
+import java.math.BigDecimal;
+import java.util.Optional;
 
 /** Service class for managing the calculation of the lease rate. */
 @Service
@@ -21,7 +22,7 @@ public class LeaseCalculationService {
 
   @Autowired private CustomerServiceProxy customerServiceProxy;
 
-  public OptionalDouble calculateLeaseRate(
+  public Optional<BigDecimal> calculateLeaseRate(
       int carId, int mileage, int duration, int interestRateId, int customerId) {
 
     var leaseRateBean =

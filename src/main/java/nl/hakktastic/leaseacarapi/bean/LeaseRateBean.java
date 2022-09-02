@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.OptionalDouble;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -19,7 +19,6 @@ public class LeaseRateBean implements Serializable {
   private CarBean car;
   private CustomerBean customer;
   private InterestRateBean interestRate;
-  private Double leaseRate;
   private int mileage;
   private int duration;
 
@@ -33,7 +32,7 @@ public class LeaseRateBean implements Serializable {
         && (this.interestRate != null && this.interestRate.getId() != 0);
   }
 
-  public OptionalDouble getLeaseRate() {
+  public Optional<BigDecimal> getLeaseRate() {
 
     if (areRequiredParamsPresent()) {
 
@@ -41,11 +40,11 @@ public class LeaseRateBean implements Serializable {
           (((this.mileage / 12) * this.duration) / this.car.getNettPrice())
               + (((this.interestRate.getInterestRate() / 100) * this.car.getNettPrice()) / 12);
 
-      var result = new BigDecimal(leaseRate).setScale(2, RoundingMode.HALF_DOWN).doubleValue();
+      var result = new BigDecimal(leaseRate).setScale(2, RoundingMode.HALF_DOWN);
 
-      return OptionalDouble.of(result);
+      return Optional.of(result);
     }
 
-    return OptionalDouble.empty();
+    return Optional.empty();
   }
 }
