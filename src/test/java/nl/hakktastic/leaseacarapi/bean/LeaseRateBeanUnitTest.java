@@ -24,7 +24,7 @@ public class LeaseRateBeanUnitTest {
 
     assertThat(leaseRateBean.areRequiredParamsPresent()).isEqualTo(Boolean.TRUE);
     assertThat(optional).isNotNull().isPresent();
-    assertThat(optional.getAsDouble()).isEqualTo(LeaseRateTestData.LEASE_RATE_VALID);
+    assertThat(optional.get()).isEqualTo(LeaseRateTestData.LEASE_RATE_VALID);
   }
 
   @Test
