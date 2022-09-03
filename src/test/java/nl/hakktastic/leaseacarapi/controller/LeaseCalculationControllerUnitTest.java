@@ -187,4 +187,60 @@ public class LeaseCalculationControllerUnitTest {
     assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     assertThat(responseEntity.getBody()).isEqualTo(BigDecimal.ZERO);
   }
+
+  // *
+
+  @Test
+  public void givenInvalidCustomerId_whenCalculateLeaseRate_thenReturnOK() {
+
+    when(service.calculateLeaseRate(anyInt(), anyInt(), anyInt(), anyInt(), anyInt()))
+        .thenReturn(Optional.of(LeaseRateTestData.LEASE_RATE_VALID));
+
+    var responseEntity =
+        controller.calculateLeaseRate(
+            LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
+            LeaseRateTestData.mileage,
+            LeaseRateTestData.duration,
+            LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001,
+            2525);
+
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(responseEntity.getBody()).isEqualTo(LeaseRateTestData.LEASE_RATE_VALID);
+  }
+
+  @Test
+  public void givenInvalidInterestRateId_whenCalculateLeaseRate_thenReturnNotFound() {
+
+    when(service.calculateLeaseRate(anyInt(), anyInt(), anyInt(), anyInt(), anyInt()))
+        .thenReturn(Optional.empty());
+
+    var responseEntity =
+        controller.calculateLeaseRate(
+            LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
+            LeaseRateTestData.mileage,
+            LeaseRateTestData.duration,
+            999999,
+            LeaseRateTestData.Customer.ID_VALID);
+
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    assertThat(responseEntity.getBody()).isEqualTo(BigDecimal.ZERO);
+  }
+
+  @Test
+  public void givenInvalidCarId_whenCalculateLeaseRate_thenReturnNotFound() {
+
+    when(service.calculateLeaseRate(anyInt(), anyInt(), anyInt(), anyInt(), anyInt()))
+        .thenReturn(Optional.empty());
+
+    var responseEntity =
+        controller.calculateLeaseRate(
+            25382510,
+            LeaseRateTestData.mileage,
+            LeaseRateTestData.duration,
+            LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001,
+            LeaseRateTestData.Customer.ID_VALID);
+
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    assertThat(responseEntity.getBody()).isEqualTo(BigDecimal.ZERO);
+  }
 }
