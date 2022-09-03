@@ -22,6 +22,17 @@ public class LeaseCalculationService {
 
   @Autowired private CustomerServiceProxy customerServiceProxy;
 
+  /**
+   * Calculate the lease rate.
+   *
+   * @param carId the id of the car object
+   * @param mileage the yearly mileage to be driven
+   * @param duration the duration of the leease period in months
+   * @param interestRateId the id of the interest rate object
+   * @param customerId the id of the customer
+   * @return Returns an Optional containing the lease rate if all values are provided, otherwise
+   *     returns {@code Optional.empty()}.
+   */
   public Optional<BigDecimal> calculateLeaseRate(
       int carId, int mileage, int duration, int interestRateId, int customerId) {
 
