@@ -20,6 +20,17 @@ public class LeaseCalculationController {
 
   @Autowired LeaseCalculationService leaseCalculationService;
 
+  /**
+   * Calculate Lease Rate.
+   *
+   * @param carId id of the car object
+   * @param mileage yearly mileage
+   * @param duration contract duration in months
+   * @param interestRateId id of interest rate object
+   * @param customerId id of customer
+   * @return Returns calculated lease rate if all params except for the customer ID are provided,
+   *     otherwise returns an empty {@code BigDecimal.ZERO}
+   */
   @GetMapping(
       path =
           "/leaserates/car/{carId}/mileage/{mileage}/duration/{duration}/"
@@ -40,6 +51,6 @@ public class LeaseCalculationController {
 
     log.info("calculate lease rate --> response code -> {} ({})", status.value(), status.name());
 
-    return new ResponseEntity<BigDecimal>(leaseRate.orElse(BigDecimal.ZERO), status);
+    return new ResponseEntity<BigDecimal>(leaseRate.orElseGet(() -> BigDecimal.ZERO), status);
   }
 }
