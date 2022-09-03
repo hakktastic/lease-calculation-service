@@ -46,8 +46,26 @@ public class LeaseCalculationServiceUnitTest {
             LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001,
             LeaseRateTestData.Customer.ID_VALID);
 
-    assertThat(optional).isNotNull().isPresent();
-    assertThat(optional.get()).isEqualTo(LeaseRateTestData.LEASE_RATE_VALID);
+    assertThat(optional).isPresent().get().isEqualTo(LeaseRateTestData.LEASE_RATE_VALID);
+  }
+
+  @Test
+  public void givenNoCustomerId_whenGetLeaseRate_thenReturnCalculatedLeaseRate() {
+
+    when(carServiceProxy.getCarById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
+    when(interestRateProxy.getInterestById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
+
+    var optional =
+        service.calculateLeaseRate(
+            LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
+            LeaseRateTestData.mileage,
+            LeaseRateTestData.duration,
+            LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001,
+            0);
+
+    assertThat(optional).isPresent().get().isEqualTo(LeaseRateTestData.LEASE_RATE_VALID);
   }
 
   @Test
@@ -61,9 +79,6 @@ public class LeaseCalculationServiceUnitTest {
   @Test
   public void givenCarOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
 
-    when(carServiceProxy.getCarById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
-
     var optional =
         service.calculateLeaseRate(LeaseRateTestData.Car.ID_VALID_LAND_ROVER, 0, 0, 0, 0);
 
@@ -73,9 +88,6 @@ public class LeaseCalculationServiceUnitTest {
   @Test
   public void givenCustomerOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
 
-    when(customerServiceProxy.getCustomerById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
-
     var optional = service.calculateLeaseRate(0, 0, 0, 0, LeaseRateTestData.Customer.ID_VALID);
 
     assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
@@ -83,9 +95,6 @@ public class LeaseCalculationServiceUnitTest {
 
   @Test
   public void givenInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
-
-    when(interestRateProxy.getInterestById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
 
     var optional =
         service.calculateLeaseRate(
@@ -96,12 +105,6 @@ public class LeaseCalculationServiceUnitTest {
 
   @Test
   public void givenCarAndCustomerOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
-
-    when(carServiceProxy.getCarById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
-
-    when(customerServiceProxy.getCustomerById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
 
     var optional =
         service.calculateLeaseRate(
@@ -117,12 +120,6 @@ public class LeaseCalculationServiceUnitTest {
   @Test
   public void givenCarAndInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
 
-    when(carServiceProxy.getCarById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
-
-    when(interestRateProxy.getInterestById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
-
     var optional =
         service.calculateLeaseRate(
             LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
@@ -136,12 +133,6 @@ public class LeaseCalculationServiceUnitTest {
 
   @Test
   public void givenCustomerAndInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
-
-    when(interestRateProxy.getInterestById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
-
-    when(customerServiceProxy.getCustomerById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
 
     var optional =
         service.calculateLeaseRate(
@@ -157,13 +148,6 @@ public class LeaseCalculationServiceUnitTest {
   @Test
   public void givenNoMileage_whenGetLeaseRate_thenReturnEmptyOptional() {
 
-    when(carServiceProxy.getCarById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
-    when(interestRateProxy.getInterestById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
-    when(customerServiceProxy.getCustomerById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
-
     var optional =
         service.calculateLeaseRate(
             LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
@@ -177,13 +161,6 @@ public class LeaseCalculationServiceUnitTest {
 
   @Test
   public void givenNoDuration_whenGetLeaseRate_thenReturnEmptyOptional() {
-
-    when(carServiceProxy.getCarById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
-    when(interestRateProxy.getInterestById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
-    when(customerServiceProxy.getCustomerById(anyInt()))
-        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
 
     var optional =
         service.calculateLeaseRate(
