@@ -30,8 +30,8 @@ public class LeaseCalculationService {
    * @param duration the duration of the leease period in months
    * @param interestRateId the id of the interest rate object
    * @param customerId the id of the customer
-   * @return Returns an Optional containing the lease rate if all values are provided, otherwise
-   *     returns {@code Optional.empty()}.
+   * @return Returns an Optional containing the lease rate if required values are provided,
+   *     otherwise returns {@code Optional.empty()}.
    */
   public Optional<BigDecimal> calculateLeaseRate(
       int carId, int mileage, int duration, int interestRateId, int customerId) {
