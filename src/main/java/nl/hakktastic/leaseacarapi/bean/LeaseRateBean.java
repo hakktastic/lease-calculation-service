@@ -29,7 +29,10 @@ public class LeaseRateBean implements Serializable {
 
     return (this.car != null && car.getId() != 0)
         && (this.customer != null && this.customer.getId() != 0)
-        && (this.interestRate != null && this.interestRate.getId() != 0);
+        && (this.interestRate != null
+            && this.interestRate.getId() != 0
+            && this.duration > 0
+            && this.mileage > 0);
   }
 
   public Optional<BigDecimal> getLeaseRate() {
