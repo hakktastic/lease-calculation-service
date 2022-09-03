@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
+/** Bean which holds the information for calculating the lease rate. */
 @Data
 @Builder
 @AllArgsConstructor
@@ -23,6 +24,8 @@ public class LeaseRateBean implements Serializable {
   private int duration;
 
   /**
+   * Are required params present boolean.
+   *
    * @return Returns TRUE if car-, customer- and interest rate entities have been set.
    */
   public boolean areRequiredParamsPresent() {
@@ -35,6 +38,11 @@ public class LeaseRateBean implements Serializable {
             && this.mileage > 0);
   }
 
+  /**
+   * Gets lease rate.
+   *
+   * @return the lease rate
+   */
   public Optional<BigDecimal> getLeaseRate() {
 
     if (areRequiredParamsPresent()) {
