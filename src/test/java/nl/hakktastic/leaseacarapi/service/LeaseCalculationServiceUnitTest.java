@@ -51,25 +51,148 @@ public class LeaseCalculationServiceUnitTest {
   }
 
   @Test
-  public void givenNoArgs_whenGetLeaseRate_thenReturnEmptyOptional() {}
+  public void givenNoArgs_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    var optional = service.calculateLeaseRate(0, 0, 0, 0, 0);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
 
   @Test
-  public void givenCarOnly_whenGetLeaseRate_thenReturnEmptyOptional() {}
+  public void givenCarOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    when(carServiceProxy.getCarById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
+
+    var optional =
+        service.calculateLeaseRate(LeaseRateTestData.Car.ID_VALID_LAND_ROVER, 0, 0, 0, 0);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
 
   @Test
-  public void givenCustomerOnly_whenGetLeaseRate_thenReturnEmptyOptional() {}
+  public void givenCustomerOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    when(customerServiceProxy.getCustomerById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
+
+    var optional = service.calculateLeaseRate(0, 0, 0, 0, LeaseRateTestData.Customer.ID_VALID);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
 
   @Test
-  public void givenInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {}
+  public void givenInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    when(interestRateProxy.getInterestById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
+
+    var optional =
+        service.calculateLeaseRate(
+            0, 0, 0, LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001, 0);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
 
   @Test
-  public void givenCarAndCustomerOnly_whenGetLeaseRate_thenReturnEmptyOptional() {}
+  public void givenCarAndCustomerOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    when(carServiceProxy.getCarById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
+
+    when(customerServiceProxy.getCustomerById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
+
+    var optional =
+        service.calculateLeaseRate(
+            LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
+            0,
+            0,
+            0,
+            LeaseRateTestData.Customer.ID_VALID);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
 
   @Test
-  public void givenCarAndInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {}
+  public void givenCarAndInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    when(carServiceProxy.getCarById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
+
+    when(interestRateProxy.getInterestById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
+
+    var optional =
+        service.calculateLeaseRate(
+            LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
+            0,
+            0,
+            LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001,
+            0);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
 
   @Test
-  public void givenCustomerAndInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {}
+  public void givenCustomerAndInterestRateOnly_whenGetLeaseRate_thenReturnEmptyOptional() {
 
-  // TODO add test cases for mileage and duration
+    when(interestRateProxy.getInterestById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
+
+    when(customerServiceProxy.getCustomerById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
+
+    var optional =
+        service.calculateLeaseRate(
+            0,
+            0,
+            0,
+            LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001,
+            LeaseRateTestData.Customer.ID_VALID);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
+
+  @Test
+  public void givenNoMileage_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    when(carServiceProxy.getCarById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
+    when(interestRateProxy.getInterestById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
+    when(customerServiceProxy.getCustomerById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
+
+    var optional =
+        service.calculateLeaseRate(
+            LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
+            0,
+            LeaseRateTestData.duration,
+            LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001,
+            LeaseRateTestData.Customer.ID_VALID);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
+
+  @Test
+  public void givenNoDuration_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    when(carServiceProxy.getCarById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Car.CAR_OBJECT_VALID));
+    when(interestRateProxy.getInterestById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID));
+    when(customerServiceProxy.getCustomerById(anyInt()))
+        .thenReturn(Optional.ofNullable(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID));
+
+    var optional =
+        service.calculateLeaseRate(
+            LeaseRateTestData.Car.ID_VALID_LAND_ROVER,
+            LeaseRateTestData.mileage,
+            0,
+            LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_ID_1001,
+            LeaseRateTestData.Customer.ID_VALID);
+
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
 }
