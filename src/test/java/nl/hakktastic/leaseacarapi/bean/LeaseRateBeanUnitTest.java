@@ -160,5 +160,73 @@ public class LeaseRateBeanUnitTest {
     assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
   }
 
-  // TODO add test cases for mileage and duration
+  @Test
+  public void givenNoMileage_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    var leaseRateBean =
+        LeaseRateBean.builder()
+            .car(LeaseRateTestData.Car.CAR_OBJECT_VALID)
+            .customer(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID)
+            .interestRate(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID)
+            .duration(LeaseRateTestData.duration)
+            .build();
+
+    var optional = leaseRateBean.getLeaseRate();
+
+    assertThat(leaseRateBean.areRequiredParamsPresent()).isEqualTo(Boolean.FALSE);
+    assertThat(optional.isEmpty()).isEqualTo(Boolean.TRUE);
+  }
+
+  @Test
+  public void givenZeroMileage_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    var leaseRateBean =
+        LeaseRateBean.builder()
+            .car(LeaseRateTestData.Car.CAR_OBJECT_VALID)
+            .customer(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID)
+            .interestRate(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID)
+            .mileage(0)
+            .duration(LeaseRateTestData.duration)
+            .build();
+
+    var optional = leaseRateBean.getLeaseRate();
+
+    assertThat(leaseRateBean.areRequiredParamsPresent()).isEqualTo(Boolean.FALSE);
+    assertThat(optional.isEmpty()).isEqualTo(Boolean.TRUE);
+  }
+
+  @Test
+  public void givenNoDuration_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    var leaseRateBean =
+        LeaseRateBean.builder()
+            .car(LeaseRateTestData.Car.CAR_OBJECT_VALID)
+            .customer(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID)
+            .interestRate(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID)
+            .mileage(LeaseRateTestData.mileage)
+            .build();
+
+    var optional = leaseRateBean.getLeaseRate();
+
+    assertThat(leaseRateBean.areRequiredParamsPresent()).isEqualTo(Boolean.FALSE);
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
+
+  @Test
+  public void givenZeroDuration_whenGetLeaseRate_thenReturnEmptyOptional() {
+
+    var leaseRateBean =
+        LeaseRateBean.builder()
+            .car(LeaseRateTestData.Car.CAR_OBJECT_VALID)
+            .customer(LeaseRateTestData.Customer.CUSTOMER_OBJECT_VALID)
+            .interestRate(LeaseRateTestData.InterestRate.INTEREST_RATE_OBJECT_VALID)
+            .mileage(LeaseRateTestData.mileage)
+            .duration(0)
+            .build();
+
+    var optional = leaseRateBean.getLeaseRate();
+
+    assertThat(leaseRateBean.areRequiredParamsPresent()).isEqualTo(Boolean.FALSE);
+    assertThat(optional.isPresent()).isEqualTo(Boolean.FALSE);
+  }
 }
