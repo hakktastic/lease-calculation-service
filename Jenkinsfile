@@ -19,7 +19,7 @@ pipeline {
               - name: jenkins-docker-cfg
                 mountPath: /kaniko/.docker
           - name: maven
-            image: maven:3.8.5-openjdk-11-slim
+            image: maven:3.8.5-openjdk-17-slim
             command:
             - cat
             tty: true

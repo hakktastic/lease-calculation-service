@@ -1,4 +1,4 @@
-FROM openjdk:11-slim
+FROM maven:3.8.5-openjdk-17-slim
 EXPOSE 8081
 ARG DEPENDENCY=target/dependency
 COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib

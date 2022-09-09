@@ -4,20 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import nl.hakktastic.leaseacarapi.proxy.CarServiceProxy;
 import nl.hakktastic.leaseacarapi.proxy.CustomerServiceProxy;
 import nl.hakktastic.leaseacarapi.proxy.InterestRateServiceProxy;
-import org.apache.commons.lang3.Validate;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 /** Service class for managing the calculation of the lease rate. */
 @Service
 @Slf4j
 public class LeaseCalculationService {
-
-  private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
   @Autowired private CarServiceProxy carServiceProxy;
 
@@ -25,30 +22,67 @@ public class LeaseCalculationService {
 
   @Autowired private CustomerServiceProxy customerServiceProxy;
 
-  public double calculateLeaseRate(
+  /**
+   * Calculate the lease rate.
+   *
+   * @param carId the id of the car object
+   * @param mileage the yearly mileage to be driven
+   * @param duration the duration of the leease period in months
+   * @param interestRateId the id of the interest rate object
+   * @param customerId the id of the customer
+   * @return Returns an Optional containing the lease rate if required values are provided,
+   *     otherwise returns {@code Optional.empty()}.
+   */
+  public Optional<BigDecimal> calculateLeaseRate(
       int carId, int mileage, int duration, int interestRateId, int customerId) {
 
-    var carBean = this.carServiceProxy.getCarById(carId).orElseGet(() -> null);
-    var interestRateBean = this.interestRateProxy.getInterestById(interestRateId).orElseGet(() -> null);
-    var customerBean = this.customerServiceProxy.getCustomerById(customerId).orElseGet(() -> null);
+    if (mileage < 1) {
 
-    Validate.notNull(carBean, "unable to retreive car entity with ID: {}", carId);
-    Validate.notNull(
-        interestRateBean, "unable to retreive interest rate entity with ID: {}", interestRateId);
-    Validate.notNull(customerBean, "unable to retrieve customer entity with ID: {}", customerId);
+      log.warn("Aborting calculation because no mileage > 1 was provided");
+      return Optional.empty();
+    }
 
-      this.logger.info("Mileage --> {}", mileage);
-      this.logger.info("Duration --> {}", duration);
-      this.logger.info("Car entity --> {}", carBean);
-      this.logger.info("Interest Rate entity --> {}", interestRateBean);
-      this.logger.info("Customer entity --> {}", customerBean);
+    if (duration < 1) {
+      log.warn("Aborting calculation because no duration > 1 was provided");
+      return Optional.empty();
+    }
+
+    var car = carServiceProxy.getCarById(carId);
+    var customer = customerServiceProxy.getCustomerById(customerId);
+    var interestRate = interestRateProxy.getInterestById(interestRateId);
+
+    if (!car.isPresent()) {
+
+      log.warn(
+          "Aborting calculation because service was unable to retrieve Car info for ID:{}", carId);
+      return Optional.empty();
+    }
+
+    if (!interestRate.isPresent()) {
+
+      log.warn(
+          "Aborting calculation because service was unable to retrieve Interest Rate info for ID:{}",
+          interestRateId);
+      return Optional.empty();
+    }
+
+    if (!customer.isPresent()) {
+
+      log.warn(
+          "Unable to retrieve Customer info for ID:{}. Continuing calculation because this info is not mandatory",
+          customerId);
+    }
+
+    log.info("Car information for provided id {}:{}", carId, car);
+    log.info("Customer information for provided id {}:{}", customerId, customer);
+    log.info("Interest Rate information for provided id {}:{}", interestRateId, interestRate);
 
     var leaseRate =
-        (((mileage / 12) * duration) / carBean.getNettPrice())
-            + (((interestRateBean.getInterestRate() / 100) * carBean.getNettPrice()) / 12);
+        (((mileage / 12) * duration) / car.get().getNettPrice())
+            + (((interestRate.get().getInterestRate() / 100) * car.get().getNettPrice()) / 12);
 
-      this.logger.info("Lease Rate --> {}", leaseRate);
+    var result = new BigDecimal(leaseRate).setScale(2, RoundingMode.HALF_DOWN);
 
-    return new BigDecimal(leaseRate).setScale(2, RoundingMode.HALF_DOWN).doubleValue();
+    return Optional.ofNullable(result);
   }
 }
