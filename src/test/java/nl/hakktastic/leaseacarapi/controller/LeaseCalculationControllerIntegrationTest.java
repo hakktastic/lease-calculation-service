@@ -249,7 +249,7 @@ public class LeaseCalculationControllerIntegrationTest {
   }
 
   @Test
-  public void givenCustomerServiceProxyReturnsNull_whenCalculateLeaseRate_thenReturnOK()
+  public void givenCustomerServiceProxyReturnsNull_whenCalculateLeaseRate_thenReturnNotFound()
       throws Exception {
 
     when(carServiceProxy.getCarById(anyInt()))
