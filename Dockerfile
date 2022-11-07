@@ -1,4 +1,5 @@
-FROM maven:3.8.5-openjdk-17-slim
+FROM alpine:latest
+RUN apk add --no-cache openjdk17-jre-headless
 EXPOSE 8081
 ARG DEPENDENCY=target/dependency
 COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
